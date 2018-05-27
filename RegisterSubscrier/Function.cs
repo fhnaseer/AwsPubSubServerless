@@ -16,7 +16,7 @@ namespace RegisterSubscrier
         /// <param name="input"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public async Task<string> FunctionHandler(ILambdaContext context)
+        public async Task<Subscriber> FunctionHandler(ILambdaContext context)
         {
             var guid = Guid.NewGuid().ToString().Replace("-", "");
             var id = $"subscriber{guid}";
@@ -24,7 +24,7 @@ namespace RegisterSubscrier
             {
                 var response = await ServerlessHelper.CreateQueue(id);
                 await ServerlessHelper.SaveSubscriber(response);
-                return id;
+                return response;
             }
             catch (Exception e)
             {

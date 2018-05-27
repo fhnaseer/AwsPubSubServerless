@@ -60,14 +60,20 @@ namespace Serverless.Common
         public static async Task<bool> PublishTopics(PublishTopicInput input)
         {
             var client = GetDbContext();
+
             foreach (var topic in input.Topics)
             {
                 var response = client.QueryAsync<TopicTable>(topic);
                 var items = await response.GetRemainingAsync();
+                var message = new
+                {
+                    topic,
+                    message = input.Message
+                };
                 foreach (var item in items)
                 {
                     var sqsClient = GetAmazonSqsClient();
-                    var res = await sqsClient.SendMessageAsync(item.QueueUrl, input.Message);
+                    var res = await sqsClient.SendMessageAsync(item.QueueUrl, Newtonsoft.Json.JsonConvert.SerializeObject(message));
                 }
             }
             return true;

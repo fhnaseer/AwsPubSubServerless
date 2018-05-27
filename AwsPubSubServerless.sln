@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RegisterSubscrier", "Regist
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serverless.Common", "Serverless.Common\Serverless.Common.csproj", "{CC0F32DF-874C-4A6D-B504-18EB012312BF}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubscribeTopic", "SubscribeTopic\SubscribeTopic.csproj", "{41E6E677-249D-472A-BCD7-730E05951A09}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{CC0F32DF-874C-4A6D-B504-18EB012312BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC0F32DF-874C-4A6D-B504-18EB012312BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC0F32DF-874C-4A6D-B504-18EB012312BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41E6E677-249D-472A-BCD7-730E05951A09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41E6E677-249D-472A-BCD7-730E05951A09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41E6E677-249D-472A-BCD7-730E05951A09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41E6E677-249D-472A-BCD7-730E05951A09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

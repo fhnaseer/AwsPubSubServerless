@@ -41,5 +41,13 @@ namespace Serverless.Common
             await client.SaveAsync(subscriber);
             return true;
         }
+
+        public static async Task<bool> SubscribeTopics(TopicsInput topicsInput)
+        {
+            var client = GetDbContext();
+            foreach (var topic in topicsInput.Topics)
+                await client.SaveAsync(new TopicTable { SubscriberId = topicsInput.SubscriberId, TopicName = topic });
+            return true;
+        }
     }
 }

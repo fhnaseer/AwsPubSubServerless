@@ -42,7 +42,7 @@ namespace Serverless.Common
             return true;
         }
 
-        public static async Task<bool> SubscribeTopics(TopicsInput topicsInput)
+        public static async Task<bool> SubscribeTopics(SubscribeTopicsInput topicsInput)
         {
             var client = GetDbContext();
             foreach (var topic in topicsInput.Topics)

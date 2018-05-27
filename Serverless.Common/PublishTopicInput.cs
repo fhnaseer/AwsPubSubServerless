@@ -3,11 +3,10 @@ using Newtonsoft.Json;
 
 namespace Serverless.Common
 {
-    public class TopicsInput
+    public class PublishTopicInput
     {
-        [JsonProperty("subscriberId")]
-        public string SubscriberId { get; set; }
-
+        [JsonProperty("message")]
+        public string Message { get; set; }
 
         [JsonProperty("topics")]
         public List<string> Topics { get; set; }

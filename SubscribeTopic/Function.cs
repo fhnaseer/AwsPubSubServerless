@@ -22,7 +22,7 @@ namespace SubscribeTopic
         {
             try
             {
-                await ServerlessHelper.SubscribeTopics(input.ToObject<TopicsInput>());
+                await ServerlessHelper.SubscribeTopics(input.ToObject<SubscribeTopicsInput>());
                 return "Successful";
             }
             catch (Exception e)

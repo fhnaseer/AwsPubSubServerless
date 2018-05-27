@@ -23,7 +23,7 @@ namespace RegisterSubscrier
             try
             {
                 var response = await ServerlessHelper.CreateQueue(id);
-                context.Logger.Log(response.QueueUrl);
+                await ServerlessHelper.SaveSubscriber(response);
                 return id;
             }
             catch (Exception e)

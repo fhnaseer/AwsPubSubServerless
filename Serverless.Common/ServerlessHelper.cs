@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Amazon;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
-using Amazon.DynamoDBv2.Model;
 using Amazon.Runtime;
 using Amazon.SQS;
 using Amazon.SQS.Model;
@@ -12,10 +11,6 @@ namespace Serverless.Common
 {
     public static class ServerlessHelper
     {
-        private const string SubscribersTableName = "subscribers";
-        private const string SubscriberIdColumn = "SubscriberId";
-        private const string QueueUrlColumn = "QueueUrl";
-
         private static IAmazonSQS GetAmazonSqsClient()
         {
             var credentials = new BasicAWSCredentials(Environment.AccessKey, Environment.SecretKey);
@@ -25,10 +20,10 @@ namespace Serverless.Common
         private static IDynamoDBContext GetDbContext()
         {
             var config = new DynamoDBContextConfig { Conversion = DynamoDBEntryConversion.V2 };
-            return new DynamoDBContext(new AmazonDynamoDBClient(), config);
+            return new DynamoDBContext(new AmazonDynamoDBClient(Environment.AccessKey, Environment.SecretKey), config);
         }
 
-        public static async Task<CreateQueueResponse> CreateQueue(string queueName)
+        public static async Task<Subscriber> CreateQueue(string queueName)
         {
             var createQueueRequest = new CreateQueueRequest();
             createQueueRequest.QueueName = queueName;
@@ -37,24 +32,13 @@ namespace Serverless.Common
             createQueueRequest.Attributes = attrs;
             var sqsClient = GetAmazonSqsClient();
             var response = await sqsClient.CreateQueueAsync(createQueueRequest);
-            await SaveSubscriber(queueName, response.QueueUrl);
-            return response;
+            return new Subscriber { SubscriberId = queueName, QueueUrl = response.QueueUrl };
         }
 
-        private static async Task<bool> SaveSubscriber(string subscriberId, string queueUrl)
+        public static async Task<bool> SaveSubscriber(Subscriber subscriber)
         {
-            var client = new AmazonDynamoDBClient(Environment.AccessKey, Environment.SecretKey);
-            var db = GetDbContext();
-            var request = new PutItemRequest
-            {
-                TableName = SubscribersTableName,
-                Item = new Dictionary<string, AttributeValue>
-                {
-                    { SubscriberIdColumn, new AttributeValue { S = subscriberId }},
-                    { QueueUrlColumn, new AttributeValue { S = queueUrl }},
-                }
-            };
-            await client.PutItemAsync(request);
+            var client = GetDbContext();
+            await client.SaveAsync(subscriber);
             return true;
         }
     }

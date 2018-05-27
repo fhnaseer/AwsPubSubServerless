@@ -23,6 +23,12 @@ namespace Serverless.Common
             return new DynamoDBContext(new AmazonDynamoDBClient(Environment.AccessKey, Environment.SecretKey), config);
         }
 
+        private static IAmazonDynamoDB GetDb()
+        {
+            var config = new DynamoDBContextConfig { Conversion = DynamoDBEntryConversion.V2 };
+            return new AmazonDynamoDBClient(Environment.AccessKey, Environment.SecretKey);
+        }
+
         public static async Task<Subscriber> CreateQueue(string queueName)
         {
             var createQueueRequest = new CreateQueueRequest();
@@ -48,6 +54,22 @@ namespace Serverless.Common
             var subscriber = await client.LoadAsync<Subscriber>(topicsInput.SubscriberId);
             foreach (var topic in topicsInput.Topics)
                 await client.SaveAsync(new TopicTable { QueueUrl = subscriber.QueueUrl, TopicName = topic });
+            return true;
+        }
+
+        public static async Task<bool> PublishTopics(PublishTopicInput input)
+        {
+            var client = GetDbContext();
+            foreach (var topic in input.Topics)
+            {
+                var response = client.QueryAsync<TopicTable>(topic);
+                var items = await response.GetRemainingAsync();
+                foreach (var item in items)
+                {
+                    var sqsClient = GetAmazonSqsClient();
+                    var res = await sqsClient.SendMessageAsync(item.QueueUrl, input.Message);
+                }
+            }
             return true;
         }
     }

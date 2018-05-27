@@ -45,8 +45,9 @@ namespace Serverless.Common
         public static async Task<bool> SubscribeTopics(SubscribeTopicsInput topicsInput)
         {
             var client = GetDbContext();
+            var subscriber = await client.LoadAsync<Subscriber>(topicsInput.SubscriberId);
             foreach (var topic in topicsInput.Topics)
-                await client.SaveAsync(new TopicTable { SubscriberId = topicsInput.SubscriberId, TopicName = topic });
+                await client.SaveAsync(new TopicTable { QueueUrl = subscriber.QueueUrl, TopicName = topic });
             return true;
         }
     }

@@ -9,6 +9,6 @@ namespace Serverless.Common
         public string TopicName { get; set; }
 
         [DynamoDBRangeKey]
-        public string SubscriberId { get; set; }
+        public string QueueUrl { get; set; }
     }
 }

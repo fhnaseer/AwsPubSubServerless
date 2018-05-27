@@ -25,3 +25,4 @@ project.lock.json
 appsettings.json
 local.settings.json
 environment.js
+/Serverless.Common/Environment.cs

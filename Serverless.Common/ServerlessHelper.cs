@@ -78,5 +78,14 @@ namespace Serverless.Common
             }
             return true;
         }
+
+        public static async Task<bool> SubscribeContent(SubscribeContentInput contentsInput)
+        {
+            var client = GetDbContext();
+            var subscriber = await client.LoadAsync<Subscriber>(contentsInput.SubscriberId);
+            foreach (var content in contentsInput.Contents)
+                await client.SaveAsync(new ContentTable { QueueUrl = subscriber.QueueUrl, Key = content.Key, Value = content.Value, Condition = content.Condition });
+            return true;
+        }
     }
 }

@@ -5,11 +5,13 @@ VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RegisterSubscrier", "RegisterSubscrier\RegisterSubscrier.csproj", "{EBF24F17-EE2A-43D9-A5CD-85DF1D33C678}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serverless.Common", "Serverless.Common\Serverless.Common.csproj", "{CC0F32DF-874C-4A6D-B504-18EB012312BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serverless.Common", "Serverless.Common\Serverless.Common.csproj", "{CC0F32DF-874C-4A6D-B504-18EB012312BF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubscribeTopic", "SubscribeTopic\SubscribeTopic.csproj", "{41E6E677-249D-472A-BCD7-730E05951A09}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PublishTopic", "PublishTopic\PublishTopic.csproj", "{7334A2F6-FB15-43AC-89C1-BACC50B3FB70}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubscribeContent", "SubscribeContent\SubscribeContent.csproj", "{4A9F2C81-D62C-4481-AF97-4EF14D9BE0ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{7334A2F6-FB15-43AC-89C1-BACC50B3FB70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7334A2F6-FB15-43AC-89C1-BACC50B3FB70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7334A2F6-FB15-43AC-89C1-BACC50B3FB70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A9F2C81-D62C-4481-AF97-4EF14D9BE0ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A9F2C81-D62C-4481-AF97-4EF14D9BE0ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A9F2C81-D62C-4481-AF97-4EF14D9BE0ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A9F2C81-D62C-4481-AF97-4EF14D9BE0ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

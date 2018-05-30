@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubscribeContent", "Subscri
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubscribeFunctions", "SubscribeFunctions\SubscribeFunctions.csproj", "{BEB3EDB9-9099-4B2E-933A-7F43F12CE49D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PublishContent", "PublishContent\PublishContent.csproj", "{BDF9179C-982D-4700-9D84-8103FBD1F198}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{BEB3EDB9-9099-4B2E-933A-7F43F12CE49D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEB3EDB9-9099-4B2E-933A-7F43F12CE49D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEB3EDB9-9099-4B2E-933A-7F43F12CE49D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDF9179C-982D-4700-9D84-8103FBD1F198}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDF9179C-982D-4700-9D84-8103FBD1F198}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDF9179C-982D-4700-9D84-8103FBD1F198}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDF9179C-982D-4700-9D84-8103FBD1F198}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

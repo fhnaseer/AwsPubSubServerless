@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Amazon;
 using Amazon.DynamoDBv2;
@@ -94,6 +95,72 @@ namespace Serverless.Common
             var subscriber = await client.LoadAsync<Subscriber>(functionsInput.SubscriberId);
             await client.SaveAsync(new FunctionsTable { QueueUrl = subscriber.QueueUrl, SubscriptionType = functionsInput.SubscriptionType, MatchingInputs = functionsInput.MatchingInputs, MatchingFunction = functionsInput.MatchingFunction });
             return true;
+        }
+
+        public static async Task<bool> PublishContents(PublishContentInput input)
+        {
+            var client = GetDbContext();
+
+            foreach (var content in input.Contents)
+            {
+                var response = client.QueryAsync<ContentTable>(content.Key);
+                var items = await response.GetRemainingAsync();
+                var message = new
+                {
+                    content,
+                    message = input.Message
+                };
+                var sqsClient = GetAmazonSqsClient();
+                foreach (var item in items)
+                {
+                    if (item.Key.Equals(content.Key, StringComparison.CurrentCultureIgnoreCase))
+                        if (CheckConditions(item.Condition, content.Value, item.Value))
+                            await sqsClient.SendMessageAsync(item.QueueUrl, Newtonsoft.Json.JsonConvert.SerializeObject(message));
+                }
+            }
+            return true;
+        }
+
+        private static bool CheckConditions(string condition, string publicationValueString, string subscriberValueString)
+        {
+            if (condition == ">=" || condition == ">" || condition == "<" || condition == "<=")
+            {
+                var publicationVal = double.Parse(publicationValueString);
+                var subscriberVal = double.Parse(subscriberValueString);
+                if (double.IsNaN(publicationVal) || double.IsNaN(subscriberVal))
+                    return false;
+                else
+                {
+                    if (condition == ">=")
+                    {
+                        if (publicationVal >= subscriberVal)
+                            return true;
+                    }
+                    else if (condition == ">")
+                    {
+                        if (publicationVal > subscriberVal)
+                            return true;
+                    }
+                    else if (condition == "<")
+                    {
+                        if (publicationVal < subscriberVal)
+                            return true;
+                    }
+                    else if (condition == "<=")
+                    {
+                        if (publicationVal <= subscriberVal)
+                            return true;
+                    }
+                }
+            }
+            else if (condition == "=")
+            {
+                var publicationVal = publicationValueString;
+                var subscriberVal = subscriberValueString;
+                if (string.Equals(publicationVal, subscriberVal, StringComparison.CurrentCultureIgnoreCase))
+                    return true;
+            }
+            return false;
         }
     }
 }

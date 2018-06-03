@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Serverless.Common
+namespace SubscribeTopic
 {
-    public class PublishTopicInput
+    public class Input
     {
-        [JsonProperty("message")]
-        public string Message { get; set; }
+        [JsonProperty("subscriberId")]
+        public string SubscriberId { get; set; }
 
         [JsonProperty("topics")]
         public List<string> Topics { get; set; }

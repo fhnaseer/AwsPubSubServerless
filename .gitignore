@@ -26,3 +26,10 @@ appsettings.json
 local.settings.json
 environment.js
 /Serverless.Common/Environment.cs
+
+
+# package directories
+jspm_packages
+
+# Serverless directories
+.serverless

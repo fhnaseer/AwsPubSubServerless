@@ -22,13 +22,20 @@ namespace SubscribeTopic
         {
             try
             {
-                await ServerlessHelper.SubscribeTopics(input.ToObject<SubscribeTopicsInput>());
+                await SubscribeTopics(input.ToObject<Input>());
                 return "Successful";
             }
             catch (Exception e)
             {
                 return e.ToString();
             }
+        }
+
+        private static async Task SubscribeTopics(Input input)
+        {
+            var client = ServerlessHelper.GetDbContext();
+            foreach (var topic in input.Topics)
+                await client.SaveAsync(new TopicTable { QueueUrl = input.SubscriberId, TopicName = topic });
         }
     }
 }

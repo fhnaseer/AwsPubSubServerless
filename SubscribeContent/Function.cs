@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 using Amazon.Lambda.Core;
@@ -25,13 +23,20 @@ namespace SubscribeContent
         {
             try
             {
-                await ServerlessHelper.SubscribeContent(input.ToObject<SubscribeContentInput>());
+                await SubscribeContent(input.ToObject<Input>());
                 return "Successful";
             }
             catch (Exception e)
             {
                 return e.ToString();
             }
+        }
+
+        private static async Task SubscribeContent(Input contentsInput)
+        {
+            var client = ServerlessHelper.GetDbContext();
+            foreach (var content in contentsInput.Contents)
+                await client.SaveAsync(new ContentTable { QueueUrl = contentsInput.SubscriberId, Key = content.Key, Value = content.Value, Condition = content.Condition });
         }
     }
 }

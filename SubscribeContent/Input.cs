@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Serverless.Common
+namespace SubscribeContent
 {
-
-    public class SubscribeContentInput
+    public class Input
     {
         [JsonProperty("subscriberId")]
         public string SubscriberId { get; set; }

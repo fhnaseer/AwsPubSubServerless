@@ -2,7 +2,7 @@
 
 namespace Serverless.Common
 {
-    public class SubscribeFunctionsInput
+    public class Input
     {
         [JsonProperty("subscriptionType")]
         public string SubscriptionType { get; set; }

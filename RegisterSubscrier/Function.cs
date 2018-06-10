@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Amazon.Auth.AccessControlPolicy;
+using Amazon.Auth.AccessControlPolicy.ActionIdentifiers;
 using Amazon.Lambda.Core;
 using Amazon.SQS;
 using Amazon.SQS.Model;
@@ -39,7 +41,19 @@ namespace RegisterSubscrier
             var createQueueRequest = new CreateQueueRequest();
             createQueueRequest.QueueName = queueName;
             var attrs = new Dictionary<string, string>();
+            var policy = new Policy
+            {
+                Statements = new List<Statement>
+                {
+                    new Statement(Statement.StatementEffect.Allow)
+                    {
+                        Principals = new List<Principal>() { Principal.AllUsers },
+                        Actions = new List<ActionIdentifier>() { SQSActionIdentifiers.AllSQSActions }
+                    }
+                }
+            };
             attrs.Add(QueueAttributeName.VisibilityTimeout, "10");
+            attrs.Add(QueueAttributeName.Policy, policy.ToJson());
             createQueueRequest.Attributes = attrs;
             var sqsClient = ServerlessHelper.GetAmazonSqsClient();
             var response = await sqsClient.CreateQueueAsync(createQueueRequest);

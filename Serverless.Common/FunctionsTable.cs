@@ -11,7 +11,7 @@ namespace Serverless.Common
         [DynamoDBRangeKey]
         public string QueueUrl { get; set; }
 
-        public string MatchingInputs { get; set; }
+        public string FunctionType { get; set; }
 
         public string MatchingFunction { get; set; }
     }

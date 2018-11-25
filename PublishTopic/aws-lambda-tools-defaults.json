@@ -12,7 +12,7 @@
     "framework"     : "netcoreapp2.0",
     "function-runtime" : "dotnetcore2.0",
     "function-memory-size" : 256,
-    "function-timeout"     : 30,
+    "function-timeout"     : 300,
     "function-handler"     : "PublishTopic::PublishTopic.Function::FunctionHandler",
     "function-name"        : "PublishTopic",
     "function-role"        : "arn:aws:iam::554073090568:role/developer",

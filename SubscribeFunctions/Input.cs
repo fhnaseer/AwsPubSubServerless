@@ -10,6 +10,9 @@ namespace Serverless.Common
         [JsonProperty("subscriberId")]
         public string SubscriberId { get; set; }
 
+        [JsonProperty("functionType")]
+        public string FunctionType { get; set; }
+
         [JsonProperty("matchingInputs")]
         public string MatchingInputs { get; set; }
 

@@ -8,6 +8,9 @@ namespace PublishContent
         [JsonProperty("message")]
         public string Message { get; set; }
 
+        [JsonProperty("fromPublisher")]
+        public string FromPublisher { get; set; }
+
         [JsonProperty("content")]
         public List<Content> Contents { get; set; }
     }

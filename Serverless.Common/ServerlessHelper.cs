@@ -5,7 +5,6 @@ using Amazon.Lambda;
 using Amazon.Lambda.Model;
 using Amazon.Runtime;
 using Amazon.SQS;
-using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 
 namespace Serverless.Common

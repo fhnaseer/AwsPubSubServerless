@@ -35,7 +35,7 @@ namespace SubscribeFunctions
         private static async Task SubscribeFunctions(Input input)
         {
             var client = ServerlessHelper.GetDbContext();
-            await client.SaveAsync(new FunctionsTable { QueueUrl = input.SubscriberId, SubscriptionType = input.SubscriptionType, MatchingInputs = input.MatchingInputs, MatchingFunction = input.MatchingFunction });
+            await client.SaveAsync(new FunctionsTable { QueueUrl = input.SubscriberId, SubscriptionType = input.SubscriptionType, FunctionType = input.FunctionType, MatchingFunction = input.MatchingFunction });
         }
     }
 }

@@ -1,9 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using Amazon;
-using Amazon.Lambda;
 using Amazon.Lambda.Core;
-using Newtonsoft.Json;
+using Amazon.SQS;
 using Newtonsoft.Json.Linq;
 using Serverless.Common;
 
@@ -15,7 +13,12 @@ namespace PublishMessage
 {
     public class Function
     {
-        
+        private static IAmazonSQS _sqsClient;
+        private static IAmazonSQS SqsClient
+        {
+            get { return _sqsClient ?? (_sqsClient = ServerlessHelper.GetAmazonSqsClient()); }
+        }
+
         /// <summary>
         /// A simple function that takes a string and does a ToUpper
         /// </summary>
@@ -40,9 +43,8 @@ namespace PublishMessage
 
         public static async Task PublishMessage(Input input)
         {
-            var sqsClient = ServerlessHelper.GetAmazonSqsClient();
-            var message = JsonConvert.SerializeObject(input);
-            await sqsClient.SendMessageAsync(input.QueueUrl, Newtonsoft.Json.JsonConvert.SerializeObject(message));
+            input.Message = _sqsClient == null ? "Null" : "Not Null";
+            await SqsClient.SendMessageAsync(input.QueueUrl, Newtonsoft.Json.JsonConvert.SerializeObject(input));
         }
     }
 }

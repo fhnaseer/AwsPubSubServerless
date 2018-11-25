@@ -6,7 +6,7 @@
         "dotnet lambda help",
         "All the command line options for the Lambda command can be specified in this file."
     ],
-    "profile"     : "default",
+    "profile"     : "Student",
     "region"      : "eu-central-1",
     "configuration" : "Release",
     "framework"     : "netcoreapp2.0",
@@ -15,7 +15,7 @@
     "function-timeout"     : 30,
     "function-handler"     : "PublishContent::PublishContent.Function::FunctionHandler",
     "function-name"        : "PublishContent",
-    "function-role"        : "arn:aws:iam::424922407613:role/developer",
+    "function-role"        : "arn:aws:iam::554073090568:role/developer",
     "tracing-mode"         : "PassThrough",
     "environment-variables" : ""
 }

@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -27,11 +24,11 @@ namespace PublishFunctions
         public async Task<string> FunctionHandler(JObject input, ILambdaContext context)
         {
             var topics = input.ToObject<Input>();
-            await PublishFunctions(topics);
+            await PublishFunctions(topics, context);
             return null;
         }
 
-        public static async Task<bool> PublishFunctions(Input input)
+        public static async Task<bool> PublishFunctions(Input input, ILambdaContext context)
         {
             var client = ServerlessHelper.GetDbContext();
 
@@ -39,14 +36,14 @@ namespace PublishFunctions
             var items = await response.GetRemainingAsync();
             var sqsClient = ServerlessHelper.GetAmazonSqsClient();
             var httpClient = new HttpClient();
-
+            context.Logger.Log("database done");
             foreach (var item in items)
             {
                 if (item.FunctionType == "url")
                 {
                     var resp = await httpClient.GetAsync(item.MatchingFunction);
                     var responseString = await resp.Content.ReadAsStringAsync();
-                    await sqsClient.SendMessageAsync(item.QueueUrl, JsonConvert.SerializeObject(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(responseString)));
+                    await sqsClient.SendMessageAsync(item.QueueUrl, JsonConvert.SerializeObject(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(responseString))));
                 }
             }
             return true;
